@@ -2,6 +2,7 @@ package com.example.demo.rest;
 
 import com.example.demo.models.Permiso;
 import com.example.demo.services.PermisoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Permiso/")
 public class PermisosRest {
+    @Autowired
     private PermisoService permisoService;
 
     @GetMapping

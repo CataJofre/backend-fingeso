@@ -102,7 +102,7 @@ public class UsuarioService implements UsuarioRepository{
 
     @Override
     public <S extends Usuario> S save(S entity) {
-        return null;
+        return usuarioRepository.save(entity);
     }
 
     @Override

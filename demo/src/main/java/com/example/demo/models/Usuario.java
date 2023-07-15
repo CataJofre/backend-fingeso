@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "usuarios")
@@ -10,16 +11,20 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
+    @NotNull
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "apellido", nullable = false)
+    @NotNull
     private String apellido;
 
-    @Column(name = "correo")
+    @Column(name = "correo", nullable = false)
+    @NotNull
     private String correo;
 
-    @Column(name = "contraseña")
+    @Column(name = "contraseña", nullable = false)
+    @NotNull
     private String contraseña;
 
     public Usuario(String nombre, String apellido, String correo, String contraseña) {

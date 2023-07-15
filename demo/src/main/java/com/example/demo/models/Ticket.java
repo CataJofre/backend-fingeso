@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
@@ -9,8 +10,8 @@ import java.time.LocalDate;
 public class Ticket {
     @Id
     @Column(name = "id_ticket")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTicket;
-
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
@@ -23,7 +24,6 @@ public class Ticket {
 
     @Column(name = "prioridad")
     private String prioridad;
-
     @Column(name = "descripcion")
     private String descripcion;
 

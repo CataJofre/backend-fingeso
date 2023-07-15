@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -19,9 +20,52 @@ public class TicketService implements TicketRepository{
     @Autowired
     private TicketRepository ticketRepository;
 
+    public List<Ticket> findAllById(Long id_usuario) {
+        List<Ticket> listaTickets=new ArrayList<>();
+        List<Ticket> tickets=ticketRepository.findAll();
+        for(int i=0; i<tickets.size();i++){
+            if(tickets.get(i).getUsuario().getIdUsuario()==id_usuario){
+                listaTickets.add(tickets.get(i));
+            }
+        }
+        return listaTickets;
+    }
+
+    public List<Ticket> findAllByPriority(String prioridad) {
+        List<Ticket> listaTickets = new ArrayList<>();
+        List<Ticket> tickets = ticketRepository.findAll();
+        for (int i = 0; i < tickets.size(); i++) {
+            if (tickets.get(i).getPrioridad().equals(prioridad)) {
+                listaTickets.add(tickets.get(i));
+            }
+        }
+        return listaTickets;
+    }
+
+
+    public List<Ticket> findAllByEstado(String estado) {
+        List<Ticket> listaTickets=new ArrayList<>();
+        List<Ticket> tickets=ticketRepository.findAll();
+        for(int i=0; i<tickets.size();i++){
+            if(tickets.get(i).getEstado().equals(estado)){
+                listaTickets.add(tickets.get(i));
+            }
+        }
+        return listaTickets;
+    }
+
+
+    public void actualizarIdAnalista(Long idTicket, Long idAnalista) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setIdAnalista(Math.toIntExact(idAnalista));
+            ticketRepository.save(ticket);
+        }
+    }
+
     @Override
     public void flush() {
-
     }
 
     @Override
@@ -71,7 +115,7 @@ public class TicketService implements TicketRepository{
 
     @Override
     public <S extends Ticket> List<S> findAll(Example<S> example) {
-        return null;
+        return ticketRepository.findAll(example);
     }
 
     @Override
@@ -101,7 +145,7 @@ public class TicketService implements TicketRepository{
 
     @Override
     public <S extends Ticket> S save(S entity) {
-        return null;
+        return ticketRepository.save(entity);
     }
 
     @Override
@@ -111,7 +155,7 @@ public class TicketService implements TicketRepository{
 
     @Override
     public Optional<Ticket> findById(Long aLong) {
-        return Optional.empty();
+        return ticketRepository.findById(aLong);
     }
 
     @Override
@@ -121,7 +165,7 @@ public class TicketService implements TicketRepository{
 
     @Override
     public List<Ticket> findAll() {
-        return null;
+        return ticketRepository.findAll();
     }
 
     @Override
