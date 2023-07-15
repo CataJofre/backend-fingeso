@@ -33,6 +33,10 @@ public class Ticket {
     @Column(name = "respuesta")
     private String respuesta;
 
+
+
+    @Column(name = "apelacion")
+    private boolean apelacion;
     public Ticket(int idAnalista, LocalDate fecha, String prioridad, String descripcion, String estado, String respuesta) {
         this.idAnalista = idAnalista;
         this.fecha = fecha;
@@ -40,6 +44,7 @@ public class Ticket {
         this.descripcion = descripcion;
         this.estado = estado;
         this.respuesta = respuesta;
+        this.apelacion = false;
     }
 
     public Ticket() {
@@ -107,5 +112,12 @@ public class Ticket {
 
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
+    }
+    public boolean isApelacion() {
+        return apelacion;
+    }
+
+    public void setApelacion(boolean apelacion) {
+        this.apelacion = apelacion;
     }
 }

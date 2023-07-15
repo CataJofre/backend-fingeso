@@ -58,7 +58,11 @@ public class TicketRest {
         ticketService.responderTicket(idTicket, respuesta);
         return ResponseEntity.ok("Ticket respondido exitosamente");
     }
-
+    @PostMapping("/Apelar/{idTicket}")
+    public ResponseEntity<String> apelarRespuestaTicket(@PathVariable Long idTicket) {
+        ticketService.apelarRespuestaTicket(idTicket);
+        return ResponseEntity.ok("Apelación realizada con éxito");
+    }
 
     }
 

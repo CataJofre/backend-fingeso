@@ -73,6 +73,18 @@ public class TicketService implements TicketRepository{
             ticketRepository.save(ticket);
         }
     }
+    public void apelarRespuestaTicket(Long idTicket) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            // Comprobar si ya hay una apelación, si no la hay, proceder a apelar
+            if (!ticket.isApelacion()) {
+                ticket.setApelacion(true);
+                ticketRepository.save(ticket);
+            }
+        }
+    }
+
     @Override
     public void flush() {
     }
