@@ -64,6 +64,15 @@ public class TicketService implements TicketRepository{
         }
     }
 
+    public void responderTicket(Long idTicket, String respuesta) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setRespuesta(respuesta);
+            ticket.setEstado("Cerrado");
+            ticketRepository.save(ticket);
+        }
+    }
     @Override
     public void flush() {
     }

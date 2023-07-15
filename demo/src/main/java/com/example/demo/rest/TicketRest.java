@@ -53,4 +53,12 @@ public class TicketRest {
         return ResponseEntity.ok(ticketService.findAllByEstado(estado));
     }
 
-}
+    @PostMapping("/Responder/{idTicket}")
+    public ResponseEntity<String> responderTicket(@PathVariable Long idTicket, @RequestBody String respuesta) {
+        ticketService.responderTicket(idTicket, respuesta);
+        return ResponseEntity.ok("Ticket respondido exitosamente");
+    }
+
+
+    }
+
