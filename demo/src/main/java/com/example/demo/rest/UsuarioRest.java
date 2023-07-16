@@ -1,5 +1,6 @@
 package com.example.demo.rest;
 
+import com.example.demo.models.Ticket;
 import com.example.demo.models.Usuario;
 import com.example.demo.services.UsuarioService;
 
@@ -22,6 +23,7 @@ public class UsuarioRest {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
+    //verificar que no se registre un usuario repetido
     @PostMapping
     private ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){
         try {
@@ -32,8 +34,25 @@ public class UsuarioRest {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam("correo") String correo, @RequestParam("contraseña") String contraseña) {
+        boolean loginExitoso = usuarioService.login(correo, contraseña);
 
+        if (loginExitoso) {
+            return ResponseEntity.ok("Inicio de sesión exitoso");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        }
+    }
 
-
+    @PostMapping("/saveUser")
+    private ResponseEntity<Usuario> saveUser(@RequestBody Usuario usuario){
+        try {
+            Usuario usuarioGuardado = usuarioService.save(usuario);
+            return ResponseEntity.created(new URI("/Ticket/"+usuarioGuardado.getIdUsuario())).body(usuarioGuardado);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 
 }

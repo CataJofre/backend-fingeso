@@ -64,32 +64,35 @@ public class TicketService implements TicketRepository{
         }
     }
 
-    public void responderTicket(Long idTicket, String respuesta) {
+    //ESTADO dependerá de quien responde el ticket
+    public void responderTicket(Long idTicket, String respuesta, String estado) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
             ticket.setRespuesta(respuesta);
-            ticket.setEstado("Cerrado");
+            ticket.setEstado(estado);
             ticketRepository.save(ticket);
         }
     }
-    public void apelarRespuestaTicket(Long idTicket) {
+    public void apelarRespuestaTicket(Long idTicket, String descripcion) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
             // Comprobar si ya hay una apelación, si no la hay, proceder a apelar
             if (!ticket.isApelacion()) {
                 ticket.setApelacion(true);
+                ticket.setRespuesta(descripcion); // Actualizar la descripción del ticket
+                ticket.setEstado("Apelado");
                 ticketRepository.save(ticket);
             }
         }
     }
 
-    public void cambiarPrioridadTicket(Long idTicket, String nuevaPrioridad) {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+    public void cambiarPrioridad(Long ticketId, String prioridad) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
-            ticket.setPrioridad(nuevaPrioridad);
+            ticket.setPrioridad(prioridad);
             ticketRepository.save(ticket);
         }
     }
@@ -101,10 +104,7 @@ public class TicketService implements TicketRepository{
             ticketRepository.save(ticket);
         }
     }
-    @Override
-    public List<Ticket> findByEstado(String estado) {
-        return ticketRepository.findByEstado(estado);
-    }
+
     @Override
     public void flush() {
     }

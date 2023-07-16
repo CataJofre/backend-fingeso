@@ -20,6 +20,19 @@ public class UsuarioService implements UsuarioRepository{
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+
+    public boolean login(String correo, String contraseña) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByCorreo(correo);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            if (usuario.getContraseña().equals(contraseña)) {
+                return true; // Las credenciales son válidas
+            }
+        }
+        return false; // Las credenciales son inválidas o el usuario no existe
+    }
+
+
     @Override
     public void flush() {
 
@@ -168,5 +181,10 @@ public class UsuarioService implements UsuarioRepository{
     @Override
     public Page<Usuario> findAll(Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public Optional<Usuario> findByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
     }
 }
