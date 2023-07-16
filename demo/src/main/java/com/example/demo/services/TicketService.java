@@ -85,6 +85,26 @@ public class TicketService implements TicketRepository{
         }
     }
 
+    public void cambiarPrioridadTicket(Long idTicket, String nuevaPrioridad) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setPrioridad(nuevaPrioridad);
+            ticketRepository.save(ticket);
+        }
+    }
+    public void actualizarEstadoTicket(Long idTicket, String estado) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setEstado(estado);
+            ticketRepository.save(ticket);
+        }
+    }
+    @Override
+    public List<Ticket> findByEstado(String estado) {
+        return ticketRepository.findByEstado(estado);
+    }
     @Override
     public void flush() {
     }

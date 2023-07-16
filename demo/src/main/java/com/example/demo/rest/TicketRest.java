@@ -64,5 +64,22 @@ public class TicketRest {
         return ResponseEntity.ok("Apelación realizada con éxito");
     }
 
+    @PutMapping("/CambiarPrioridad/{ticketId}")
+    public ResponseEntity<String> cambiarPrioridadTicket(@PathVariable Long idTicket, @RequestParam String nuevaPrioridad) {
+        ticketService.cambiarPrioridadTicket(idTicket, nuevaPrioridad);
+        return ResponseEntity.ok("Prioridad del ticket cambiada exitosamente");
+    }
+    @PutMapping("/{idTicket}/estado")
+    public ResponseEntity<String> actualizarEstadoTicket(@PathVariable("idTicket") Long idTicket, @RequestParam("estado") String estado) {
+        ticketService.actualizarEstadoTicket(idTicket, estado);
+        return ResponseEntity.ok("Estado del ticket actualizado correctamente");
+    }
+    @GetMapping("/findByEstado")
+    public ResponseEntity<List<Ticket>> findByEstado(@RequestParam("estado") String estado) {
+        List<Ticket> tickets = ticketService.findByEstado(estado);
+        return ResponseEntity.ok(tickets);
+    }
+
+
     }
 
