@@ -55,7 +55,7 @@ public class TicketService implements TicketRepository{
     }
 
 
-    public void actualizarIdAnalista(Long idTicket, Long idAnalista) {
+    public void asignarAnalista(Long idTicket, Long idAnalista) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(idTicket);
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();

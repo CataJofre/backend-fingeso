@@ -32,9 +32,6 @@ public class Ticket {
 
     @Column(name = "respuesta")
     private String respuesta;
-
-
-
     @Column(name = "apelacion")
     private boolean apelacion;
     public Ticket(int idAnalista, LocalDate fecha, String prioridad, String descripcion, String estado, String respuesta) {

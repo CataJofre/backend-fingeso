@@ -34,9 +34,9 @@ public class TicketRest {
         }
     }
 
-    @PostMapping("/asignarIdAnalista")
-    public void asignarIdAnalista(@RequestParam("idAnalista") Long idAnalista, @RequestBody Ticket ticket) {
-        ticketService.actualizarIdAnalista((long) ticket.getIdTicket(), idAnalista);
+    @PostMapping("/asignarAnalista")
+    public void asignarAnalista(@RequestParam("idAnalista") Long idAnalista, @RequestBody Ticket ticket) {
+        ticketService.asignarAnalista((long) ticket.getIdTicket(), idAnalista);
     }
 
     @GetMapping("/Id/{id}")
