@@ -35,14 +35,10 @@ public class UsuarioRest {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam("correo") String correo, @RequestParam("contraseña") String contraseña) {
-        boolean loginExitoso = usuarioService.login(correo, contraseña);
+    public ResponseEntity<?> login(@RequestParam("correo") String correo, @RequestParam("contraseña") String contraseña) {
 
-        if (loginExitoso) {
-            return ResponseEntity.ok("Inicio de sesión exitoso");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
-        }
+        return new ResponseEntity<>(usuarioService.login(correo, contraseña), HttpStatus.OK);
+
     }
 
     @PostMapping("/saveUser")

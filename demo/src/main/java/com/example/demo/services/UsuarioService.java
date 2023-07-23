@@ -21,15 +21,23 @@ public class UsuarioService implements UsuarioRepository{
     private UsuarioRepository usuarioRepository;
 
 
-    public boolean login(String correo, String contraseña) {
-        Optional<Usuario> optionalUsuario = usuarioRepository.findByCorreo(correo);
-        if (optionalUsuario.isPresent()) {
-            Usuario usuario = optionalUsuario.get();
-            if (usuario.getContraseña().equals(contraseña)) {
-                return true; // Las credenciales son válidas
+
+    public Usuario login(String correo, String contraseña) {
+        try {
+            Optional<Usuario> optionalUsuario = usuarioRepository.findByCorreo(correo);
+            if (optionalUsuario.isPresent()) {
+                Usuario usuario = optionalUsuario.get();
+                if (usuario.getContraseña().equals(contraseña)) {
+                    return usuario; // Las credenciales son válidas
+                }else {
+                    throw new RuntimeException("Credenciales invalidas");
+                }
+            }else {
+                throw new RuntimeException("Credenciales invalidas");
             }
+        }catch (Exception e){
+            throw new RuntimeException("Credenciales invalidas");
         }
-        return false; // Las credenciales son inválidas o el usuario no existe
     }
 
 
