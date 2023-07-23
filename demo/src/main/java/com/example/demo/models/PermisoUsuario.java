@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "permisos_usuarios")
 public class PermisoUsuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_permiso_usuario")
     private int idPermisoUsuario;
 

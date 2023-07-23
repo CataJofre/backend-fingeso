@@ -50,5 +50,17 @@ public class UsuarioRest {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @PostMapping("/{idUsuario}/asignar-rol/{idPermiso}")
+    public ResponseEntity<String> asignarRolUsuario(
+            @PathVariable Long idUsuario,
+            @PathVariable Long idPermiso
+    ) {
+        Usuario usuario = usuarioService.asignarRolUsuario(idUsuario, idPermiso);
+        if (usuario != null) {
+            return ResponseEntity.ok("Rol asignado correctamente.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

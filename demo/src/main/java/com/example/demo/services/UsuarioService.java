@@ -1,7 +1,12 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Permiso;
+import com.example.demo.models.PermisoUsuario;
 import com.example.demo.models.Usuario;
+import com.example.demo.repositories.PermisoRepository;
+import com.example.demo.repositories.PermisoUsuarioRepository;
 import com.example.demo.repositories.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -19,8 +24,10 @@ public class UsuarioService implements UsuarioRepository{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
-
+    @Autowired
+    private PermisoUsuarioRepository permisoUsuarioRepository;
+    @Autowired
+    private PermisoRepository permisoRepository;
 
     public Usuario login(String correo, String contraseña) {
         try {
@@ -40,7 +47,22 @@ public class UsuarioService implements UsuarioRepository{
         }
     }
 
-
+    @Transactional
+    public Usuario asignarRolUsuario(Long idUsuario, Long idPermiso) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario != null) {
+            Permiso permiso = permisoRepository.findById(idPermiso).orElse(null);
+            if (permiso != null) {
+                PermisoUsuario permisoUsuario = new PermisoUsuario();
+                permisoUsuario.setUsuario(usuario);
+                permisoUsuario.setPermiso(permiso);
+                // Guarda el objeto PermisoUsuario en la base de datos
+                permisoUsuarioRepository.save(permisoUsuario);
+                return usuario;
+            }
+        }
+        return null;
+    }
     @Override
     public void flush() {
 
